@@ -8,6 +8,7 @@
 
 #import "CollectionViewController.h"
 #import "ImageCollectionViewCell.h"
+#import "HeaderCollectionReusableView.h"
 
 @interface CollectionViewController ()
 
@@ -24,16 +25,22 @@ static NSString * const reuseIdentifier = @"Cell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Do any additional setup after loading the view.
-    self.images = [@[[UIImage imageNamed:@"alexCutNose"],
-                   [UIImage imageNamed:@"alexInTheSaltFlats"],
-                   [UIImage imageNamed:@"alexInWinter"],
-                   [UIImage imageNamed:@"tiredAlex"],
-                   [UIImage imageNamed:@"guitarAndNiece"],
-                   [UIImage imageNamed:@"friendsInBolivia"],
-                   [UIImage imageNamed:@"shoeShiner"],
-                   [UIImage imageNamed:@"Timo"],
-                   [UIImage imageNamed:@"fuzzyKirby"],
-                   [UIImage imageNamed:@"Kirby"]] mutableCopy];
+    
+    self.images = [@[
+                    @{@"category":@"My Self", @"images": @[[UIImage imageNamed:@"alexCutNose"],
+                                                         [UIImage imageNamed:@"alexInTheSaltFlats"],
+                                                         [UIImage imageNamed:@"alexInWinter"],
+                                                         [UIImage imageNamed:@"tiredAlex"],
+                                                         [UIImage imageNamed:@"guitarAndNiece"]]},
+    
+                    @{@"category":@"My Friends", @"images": @[[UIImage imageNamed:@"friendsInBolivia"],
+                                                             [UIImage imageNamed:@"shoeShiner"],
+                                                             [UIImage imageNamed:@"Timo"]]},
+
+                    @{@"category":@"My Dog", @"images": @[[UIImage imageNamed:@"fuzzyKirby"],
+                                                         [UIImage imageNamed:@"Kirby"]]},
+
+                    ] mutableCopy];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,20 +61,47 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    
+    return [self.images count];
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.images count];
+    
+    NSDictionary *category = self.images[section];
+    
+    NSArray *images = [category objectForKey:@"images"];
+    
+    return [images count];
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ImageCollectionViewCell *cell = (ImageCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    cell.photoView.image = self.images[indexPath.item];
+    NSDictionary *category = self.images[indexPath.section];
+    NSArray *images = [category objectForKey:@"images"];
+    
+    cell.photoView.image = images[indexPath.item];
     
     return cell;
+}
+
+-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if (kind == UICollectionElementKindSectionHeader) {
+        
+        HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"header" forIndexPath:indexPath];
+        
+        NSDictionary *category = self.images[indexPath.section];
+        NSString *categoryName = [category objectForKey:@"category"];
+        
+        headerView.headerLabel.text = [NSString stringWithFormat:@"%@", categoryName];
+        
+        return headerView;
+    }
+    
+    return nil;
 }
 
 #pragma mark <UICollectionViewDelegate>

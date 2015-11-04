@@ -16,6 +16,7 @@
 		FAF93AD81BEA839900B9770D /* InstaKiloUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF93AD71BEA839900B9770D /* InstaKiloUITests.m */; };
 		FAF93AE71BEA881D00B9770D /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF93AE61BEA881D00B9770D /* ImageCollectionViewCell.m */; };
 		FAF93AEA1BEA88C100B9770D /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF93AE91BEA88C100B9770D /* CollectionViewController.m */; };
+		FAF93AF11BEAAD7700B9770D /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF93AF01BEAAD7700B9770D /* HeaderCollectionReusableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		FAF93AE61BEA881D00B9770D /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 		FAF93AE81BEA88C100B9770D /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		FAF93AE91BEA88C100B9770D /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		FAF93AEF1BEAAD7700B9770D /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionReusableView.h; sourceTree = "<group>"; };
+		FAF93AF01BEAAD7700B9770D /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionReusableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				FAF93AE91BEA88C100B9770D /* CollectionViewController.m */,
 				FAF93AE51BEA881D00B9770D /* ImageCollectionViewCell.h */,
 				FAF93AE61BEA881D00B9770D /* ImageCollectionViewCell.m */,
+				FAF93AEF1BEAAD7700B9770D /* HeaderCollectionReusableView.h */,
+				FAF93AF01BEAAD7700B9770D /* HeaderCollectionReusableView.m */,
 				FAF93AB21BEA839900B9770D /* Supporting Files */,
 			);
 			path = InstaKilo;
@@ -275,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAF93AF11BEAAD7700B9770D /* HeaderCollectionReusableView.m in Sources */,
 				FAF93AEA1BEA88C100B9770D /* CollectionViewController.m in Sources */,
 				FAF93AB71BEA839900B9770D /* AppDelegate.m in Sources */,
 				FAF93AE71BEA881D00B9770D /* ImageCollectionViewCell.m in Sources */,
