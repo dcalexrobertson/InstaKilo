@@ -59,7 +59,7 @@
         NSMutableArray *filteredImages = [NSMutableArray new];
         for (Image *image in images) {
             if ([image.location isEqualToString:category]) {
-                [filteredImages addObject:image];
+                [filteredImages addObject:image.image];
             }
         }
         categoryAndImages = @{@"location":category, @"images":filteredImages};
@@ -89,7 +89,7 @@
         NSMutableArray *filteredImages = [NSMutableArray new];
         for (Image *image in images) {
             if ([image.category isEqualToString:category]) {
-                [filteredImages addObject:image];
+                [filteredImages addObject:image.image];
             }
         }
         categoryAndImages = @{@"category":category, @"images":filteredImages};

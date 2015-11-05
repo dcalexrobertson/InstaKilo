@@ -75,9 +75,7 @@ static NSString * const reuseIdentifier = @"Cell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     NSDictionary *itemsOfSection = self.images[section];
-    
     NSArray *images = [itemsOfSection objectForKey:@"images"];;
-    
     return [images count];
 }
 
@@ -87,8 +85,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     NSDictionary *items = self.images[indexPath.section];
     NSArray *images = [items objectForKey:@"images"];
-    Image * thisImage = [images objectAtIndex:indexPath.row];
-    cell.photoView.image = thisImage.image;
+    cell.photoView.image = images[indexPath.item];
     
     return cell;
 }
