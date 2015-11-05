@@ -9,8 +9,11 @@
 #import "CollectionViewController.h"
 #import "ImageCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
+#import "Image.h"
 
 @interface CollectionViewController ()
+
+@property BOOL isSortedByLocation;
 
 @end
 
@@ -26,21 +29,24 @@ static NSString * const reuseIdentifier = @"Cell";
     
     // Do any additional setup after loading the view.
     
-    self.images = [@[
-                    @{@"category":@"My Self", @"images": @[[UIImage imageNamed:@"alexCutNose"],
-                                                         [UIImage imageNamed:@"alexInTheSaltFlats"],
-                                                         [UIImage imageNamed:@"alexInWinter"],
-                                                         [UIImage imageNamed:@"tiredAlex"],
-                                                         [UIImage imageNamed:@"guitarAndNiece"]]},
+    NSMutableArray *images = [Image getAllImages];
+    self.images = [Image sortImagesByCategory:images];
     
-                    @{@"category":@"My Friends", @"images": @[[UIImage imageNamed:@"friendsInBolivia"],
-                                                             [UIImage imageNamed:@"shoeShiner"],
-                                                             [UIImage imageNamed:@"Timo"]]},
+}
+- (IBAction)sortByLocation:(id)sender {
+    
+    NSMutableArray *images = [Image getAllImages];
+    self.images = [Image sortImagesByLocation:images];
+    self.isSortedByLocation = YES;
+    [self.collectionView reloadData];
+}
 
-                    @{@"category":@"My Dog", @"images": @[[UIImage imageNamed:@"fuzzyKirby"],
-                                                         [UIImage imageNamed:@"Kirby"]]},
-
-                    ] mutableCopy];
+- (IBAction)sortByCategory:(id)sender {
+    
+    NSMutableArray *images = [Image getAllImages];
+    self.images = [Image sortImagesByCategory:images];
+    self.isSortedByLocation = NO;
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,9 +74,9 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    NSDictionary *category = self.images[section];
+    NSDictionary *itemsOfSection = self.images[section];
     
-    NSArray *images = [category objectForKey:@"images"];
+    NSArray *images = [itemsOfSection objectForKey:@"images"];;
     
     return [images count];
 }
@@ -79,10 +85,10 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    NSDictionary *category = self.images[indexPath.section];
-    NSArray *images = [category objectForKey:@"images"];
-    
-    cell.photoView.image = images[indexPath.item];
+    NSDictionary *items = self.images[indexPath.section];
+    NSArray *images = [items objectForKey:@"images"];
+    Image * thisImage = [images objectAtIndex:indexPath.row];
+    cell.photoView.image = thisImage.image;
     
     return cell;
 }
@@ -94,7 +100,13 @@ static NSString * const reuseIdentifier = @"Cell";
         HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"header" forIndexPath:indexPath];
         
         NSDictionary *category = self.images[indexPath.section];
-        NSString *categoryName = [category objectForKey:@"category"];
+        NSString *categoryName = @"";
+        
+        if (self.isSortedByLocation) {
+            categoryName = [category objectForKey:@"location"];
+        } else {
+            categoryName = [category objectForKey:@"category"];
+        }
         
         headerView.headerLabel.text = [NSString stringWithFormat:@"%@", categoryName];
         
